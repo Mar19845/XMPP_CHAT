@@ -38,6 +38,8 @@ class Client(slixmpp.ClientXMPP):
         self.disconnect()
     #register user
     def register(self, iq):
+        self.send_presence()
+        self.get_roster()
         iq = self.Iq()
         iq['type'] = 'set'
         iq['register']['username'] = self.boundjid.user
@@ -55,6 +57,8 @@ class Client(slixmpp.ClientXMPP):
         except Exception as e:
             print(e)
             self.disconnect()
+            self.send_presence()
+        self.get_roster()
     #delete user from server 
     def delete(self, event):
   
@@ -95,12 +99,17 @@ class Client(slixmpp.ClientXMPP):
         try:
            self.send_presence_subscription(pto=user) 
         except IqTimeout:
-            print("Timeout del server") 
+            print("Timeout del server")
+        self.send_presence()
+        self.get_roster()
     async def groupchat(self,room,message):
-        
+        self.send_presence()
+        self.get_roster()
         self.send_message(mto=room, mbody=message, mtype='groupchat')
         
     def change_status(self,msg):
+        self.send_presence()
+        self.get_roster()
         self.notification(self.message, 'active')
     
     
