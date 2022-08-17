@@ -1,4 +1,5 @@
 
+
 # XMPP_CHAT
 
 Simple xmpp chat develop in python and slixmpp
@@ -8,7 +9,7 @@ Simple xmpp chat develop in python and slixmpp
 pip install -r requirements.txt
 ## Description
 
-The project has the following funcions:
+The project has the following functions:
 
 1. send msg to 1 user
 2. show status of users
@@ -23,3 +24,11 @@ The project has the following funcions:
 ## Run app
 
  python .\main.py  
+## Lecciones Aprendidas
+
+Aprendi el manejo de funciones asincronas y como estas interactuan para poder mostrarnos la informacion en el codigo
+## Dificultades
+
+el uso de la libreria, ya que no estaba tan bien comentada.
+Asi mismo la manera de enviar y recibir los datos fue bastante complicado 
+de implementar ya que se me complico convertir los datos xml para poder ser visto en el codigo
