@@ -13,9 +13,33 @@ def main():
         if opc == '3':
             exit()
         elif opc == '1':
-            Client.loggin()
+            user = input("User: ")
+            #psd = getpass("Password : ")
+            psd = input("Password : ")
+
+            client = Client(user, psd)
+            client.register_plugin('xep_0030') 
+            client.register_plugin('xep_0199') 
+
+            # Connect to the XMPP server and start processing XMPP stanzas.
+            client.connect()
+            client.process(forever=False)
         elif opc == '2':
-            Client.signin()
+            user = input("User: ")
+            #psd = getpass("Password : ")
+            psd = input("Password : ")
+
+            client = Client(user, psd)
+            client.register_plugin('xep_0030') 
+            client.register_plugin('xep_0004')
+            client.register_plugin('xep_0077')
+            client.register_plugin('xep_0199')
+            client.register_plugin('xep_0066')
+            client["xep_0077"].force_registration = True
+
+            # Connect to the XMPP server and start processing XMPP stanzas.
+            client.connect()
+            client.process(forever=False)
             
             
         

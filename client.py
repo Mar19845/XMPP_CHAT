@@ -7,7 +7,6 @@ from argparse import ArgumentParser
 from slixmpp.exceptions import IqError, IqTimeout
 from slixmpp.xmlstream.stanzabase import ET, ElementBase 
 import slixmpp
-import base64, time
 import threading
 
 if sys.platform == 'win32' and sys.version_info >= (3, 8):
@@ -93,14 +92,14 @@ class Client(slixmpp.ClientXMPP):
                     print('-----------------------------')
 
                     user_connected = self.client_roster.presence(jid)
-                    for res, pres in user_connected.items():
-                        print('Usuario: ', jid)
-                        show = 'conectado'
+                    for _, pres in user_connected.items():
+                        print('User: ', jid)
+                        show = 'Conectado'
                         if pres['show']:
                             show = pres['show']
                         print(show)
                         if pres['status']:
-                            print(' Status -> ', pres['status'])
+                            print('Status -> ', pres['status'])
                         print('-----------------------------')
 
         #change status on server            
@@ -117,7 +116,7 @@ class Client(slixmpp.ClientXMPP):
             self.get_roster()
             user = input("user -> ")
             contacts = self.client_roster.presence(user)
-            for res, pres in contacts.items():
+            for _,pres in contacts.items():
                 show = 'chat'
                 if pres['show']:
                     show = pres['show']
@@ -156,38 +155,6 @@ class Client(slixmpp.ClientXMPP):
             elif opc == '7':
                 delete_account()
                 cond = False
+            #this is for send msg and not wait to loggout to be send
             self.send_presence()
             await self.get_roster()
-                
-    
-    def loggin():
-        
-
-        user = input("User: ")
-        #psd = getpass("Password : ")
-        psd = input("Password : ")
-
-        client = Client(user, psd)
-        client.register_plugin('xep_0030') 
-        client.register_plugin('xep_0199') 
-
-        # Connect to the XMPP server and start processing XMPP stanzas.
-        client.connect()
-        client.process(forever=False)
-        
-    def signin():
-        user = input("User: ")
-        #psd = getpass("Password : ")
-        psd = input("Password : ")
-
-        client = Client(user, psd)
-        client.register_plugin('xep_0030') 
-        client.register_plugin('xep_0004')
-        client.register_plugin('xep_0077')
-        client.register_plugin('xep_0199')
-        client.register_plugin('xep_0066')
-        client["xep_0077"].force_registration = True
-
-        # Connect to the XMPP server and start processing XMPP stanzas.
-        client.connect()
-        client.process(forever=False)
